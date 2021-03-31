@@ -19,7 +19,7 @@
 
 - step3: add file lists to dereference into target-files.txt
 
-    > target-files.txt must use LF end of line!!!
+    > target-files.txt must use `LF end of line`!!!
 
     - target-files.txt file Example:
     ```
@@ -34,6 +34,8 @@
     ```shell
     node index.js
     ```
+
+- Result: The result files will be created on './output/' directory.
 
 ## Sources
 
