@@ -15,13 +15,39 @@ function makeFileFromObject(obj, filename) {
     });
 }
 
-let parser = new $RefParser();
-let targetFile = "./temp/pod.json";
+var targetFileText = fs.readFileSync("./data/target-files.txt").toString('utf-8');
+var targetFiles = targetFileText.split("\n")
 
-parser.dereference(targetFile, { parse: { json: true } }, (err, schema) => {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log('dereference complete');
+let resultPath = "./output/";
+try {
+    fs.mkdirSync(resultPath, { recursive: true })
+} catch (e) {
+    console.log("Failed to create output dir, e: ", e)
+}
+
+
+targetFiles.forEach((targetFile) => {
+
+    if (targetFile === "") {
+        return;
     }
-});
+
+    console.log("Try to dereference file - " + targetFile);
+    let parser = new $RefParser();
+    parser.dereference("./data/" + targetFile, { parse: { json: true } }, (err, schema) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log("File( " + targetFile + " ) dereferencing success")
+            fs.writeFileSync(resultPath + targetFile, JSON.stringify(schema, null, 2), (err) => {
+                if (err) {
+                    console.log("create result file failed.");
+                    throw err;
+                }
+
+                console.log("Dereferenced file " + targetFile + " created.");
+            })
+        }
+    });
+}
+)
