@@ -15,7 +15,7 @@
     mkdir data
     ```
 
-- step2: copy your target json files having $ref references into the './data/' directory.
+- step2: copy your target json files having $ref references and all referenced files into the './data/' directory.
 
 - step3: add file lists to dereference into target-files.txt
 
